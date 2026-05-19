@@ -1,6 +1,15 @@
 import { app, BrowserWindow, ipcMain, shell } from "electron";
 import path from "node:path";
 import { clearToken, getToken, setToken } from "./token-store";
+import {
+  getSubmitterConfig,
+  getUserCv,
+  loginLinkedInAndSaveSession,
+  runSubmitter,
+  runSubmitterSingle,
+  setGeminiApiKey,
+} from "./submitter/service";
+import type { VagaAnalisada } from "./submitter/types";
 
 const isDev = !app.isPackaged;
 let win: BrowserWindow | null = null;
@@ -58,6 +67,14 @@ app.whenReady().then(() => {
   ipcMain.handle("auth:get-token", () => getToken());
   ipcMain.handle("auth:set-token", (_event, token: string) => setToken(token));
   ipcMain.handle("auth:clear-token", () => clearToken());
+  ipcMain.handle("submitter:get-config", () => getSubmitterConfig());
+  ipcMain.handle("submitter:set-gemini-key", (_event, key: string) => setGeminiApiKey(key));
+  ipcMain.handle("submitter:get-user-cv", (_event, payload: { token: string; apiUrl: string }) =>
+    getUserCv(payload.token, payload.apiUrl),
+  );
+  ipcMain.handle("submitter:linkedin-login", () => loginLinkedInAndSaveSession());
+  ipcMain.handle("submitter:run", (_event, vagas: VagaAnalisada[]) => runSubmitter(vagas));
+  ipcMain.handle("submitter:run-single", (_event, vaga: VagaAnalisada) => runSubmitterSingle(vaga));
 
   createWindow();
 });

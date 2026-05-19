@@ -7,6 +7,7 @@ import {
   MapPin,
   Send,
   TrendingUp,
+  SendHorizontal,
 } from "lucide-react";
 import type { VagaAnalisada } from "@/types";
 
@@ -16,7 +17,15 @@ function getAlinhamentoColor(porcentagem: number): string {
   return "bg-red-100 text-red-800";
 }
 
-export function AnalysisCard({ vaga }: { vaga: VagaAnalisada }) {
+export function AnalysisCard({
+  vaga,
+  onSubmitSingle,
+  running,
+}: {
+  vaga: VagaAnalisada;
+  onSubmitSingle: (vaga: VagaAnalisada) => Promise<void>;
+  running: boolean;
+}) {
   return (
     <div className={`card ${vaga.submetido ? "border-l-4 border-l-green-500" : ""}`}>
       <div className="mb-4 flex items-start justify-between gap-3">
@@ -90,6 +99,16 @@ export function AnalysisCard({ vaga }: { vaga: VagaAnalisada }) {
             ))}
           </ul>
         </div>
+      </div>
+      <div className="mt-4 flex justify-end">
+        <button
+          disabled={running || vaga.submetido}
+          onClick={() => void onSubmitSingle(vaga)}
+          className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-3 py-2 text-sm font-medium text-white hover:bg-primary-700 disabled:opacity-60"
+        >
+          <SendHorizontal className="h-4 w-4" />
+          Submeter
+        </button>
       </div>
     </div>
   );
