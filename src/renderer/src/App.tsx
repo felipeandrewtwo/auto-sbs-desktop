@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Dashboard } from "@/pages/Dashboard";
 import { Login } from "@/pages/Login";
+import { Prefill } from "@/pages/Prefill";
+import { Setup } from "@/pages/Setup";
 import { ApiError, login } from "@/services/api";
 
-type ViewState = "boot" | "login" | "dashboard";
+type ViewState = "boot" | "login" | "setup" | "prefill" | "dashboard";
 
 function getErrorMessage(error: unknown): string {
   if (error instanceof ApiError) {
@@ -42,7 +44,18 @@ export default function App() {
         return;
       }
       setToken(savedToken);
-      setView("dashboard");
+
+      try {
+        const cfg = await window.desktop.submitter.getConfig();
+        const setupComplete = Boolean(cfg.geminiApiKey?.trim()) && Boolean(cfg.hasLinkedInSession);
+        if (!setupComplete) {
+          setView("setup");
+          return;
+        }
+        setView(cfg.hasPrefillProfile ? "dashboard" : "prefill");
+      } catch {
+        setView("setup");
+      }
     };
     void restore();
   }, []);
@@ -76,7 +89,17 @@ export default function App() {
           try {
             const jwt = await login(email, senha);
             setToken(jwt);
-            setView("dashboard");
+            try {
+              const cfg = await window.desktop.submitter.getConfig();
+              const setupComplete = Boolean(cfg.geminiApiKey?.trim()) && Boolean(cfg.hasLinkedInSession);
+              if (!setupComplete) {
+                setView("setup");
+              } else {
+                setView(cfg.hasPrefillProfile ? "dashboard" : "prefill");
+              }
+            } catch {
+              setView("setup");
+            }
             try {
               await window.desktop.auth.setToken(jwt);
             } catch (persistError) {
@@ -93,12 +116,38 @@ export default function App() {
     );
   }
 
+  if (view === "setup") {
+    return (
+      <Setup
+        token={token || ""}
+        darkMode={darkMode}
+        onToggleTheme={() => setDarkMode((prev) => !prev)}
+        onLogout={actions.logout}
+        onContinue={() => setView("prefill")}
+      />
+    );
+  }
+
+  if (view === "prefill") {
+    return (
+      <Prefill
+        darkMode={darkMode}
+        onToggleTheme={() => setDarkMode((prev) => !prev)}
+        onLogout={actions.logout}
+        onBackToSetup={() => setView("setup")}
+        onContinueToDashboard={() => setView("dashboard")}
+      />
+    );
+  }
+
   return (
     <Dashboard
       token={token || ""}
       darkMode={darkMode}
       onToggleTheme={() => setDarkMode((prev) => !prev)}
       onLogout={actions.logout}
+      onOpenSetup={() => setView("setup")}
+      onOpenPrefill={() => setView("prefill")}
       onSessionExpired={async () => {
         await actions.logout();
         setError("Sessao expirada. Faca login novamente.");

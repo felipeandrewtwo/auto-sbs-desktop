@@ -136,7 +136,7 @@ function T$1(a) {
   throw a._result;
 }
 var U$1 = { current: null }, V$1 = { transition: null }, W$1 = { ReactCurrentDispatcher: U$1, ReactCurrentBatchConfig: V$1, ReactCurrentOwner: K$1 };
-function X$1() {
+function X$2() {
   throw Error("act(...) is not supported in production builds of React.");
 }
 react_production_min.Children = { map: S$1, forEach: function(a, b, e) {
@@ -164,7 +164,7 @@ react_production_min.PureComponent = G$1;
 react_production_min.StrictMode = q$1;
 react_production_min.Suspense = w;
 react_production_min.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = W$1;
-react_production_min.act = X$1;
+react_production_min.act = X$2;
 react_production_min.cloneElement = function(a, b, e) {
   if (null === a || void 0 === a) throw Error("React.cloneElement(...): The argument must be a React element, but you passed " + a + ".");
   var d = C$1({}, a.props), c = a.key, k2 = a.ref, h = a._owner;
@@ -216,7 +216,7 @@ react_production_min.startTransition = function(a) {
     V$1.transition = b;
   }
 };
-react_production_min.unstable_act = X$1;
+react_production_min.unstable_act = X$2;
 react_production_min.useCallback = function(a, b) {
   return U$1.current.useCallback(a, b);
 };
@@ -5014,7 +5014,7 @@ function Wj(a, b, c) {
   if (5 === d || 6 === d) a = a.stateNode, b ? c.insertBefore(a, b) : c.appendChild(a);
   else if (4 !== d && (a = a.child, null !== a)) for (Wj(a, b, c), a = a.sibling; null !== a; ) Wj(a, b, c), a = a.sibling;
 }
-var X = null, Xj = false;
+var X$1 = null, Xj = false;
 function Yj(a, b, c) {
   for (c = c.child; null !== c; ) Zj(a, b, c), c = c.sibling;
 }
@@ -5027,23 +5027,23 @@ function Zj(a, b, c) {
     case 5:
       U || Lj(c, b);
     case 6:
-      var d = X, e = Xj;
-      X = null;
+      var d = X$1, e = Xj;
+      X$1 = null;
       Yj(a, b, c);
-      X = d;
+      X$1 = d;
       Xj = e;
-      null !== X && (Xj ? (a = X, c = c.stateNode, 8 === a.nodeType ? a.parentNode.removeChild(c) : a.removeChild(c)) : X.removeChild(c.stateNode));
+      null !== X$1 && (Xj ? (a = X$1, c = c.stateNode, 8 === a.nodeType ? a.parentNode.removeChild(c) : a.removeChild(c)) : X$1.removeChild(c.stateNode));
       break;
     case 18:
-      null !== X && (Xj ? (a = X, c = c.stateNode, 8 === a.nodeType ? Kf(a.parentNode, c) : 1 === a.nodeType && Kf(a, c), bd(a)) : Kf(X, c.stateNode));
+      null !== X$1 && (Xj ? (a = X$1, c = c.stateNode, 8 === a.nodeType ? Kf(a.parentNode, c) : 1 === a.nodeType && Kf(a, c), bd(a)) : Kf(X$1, c.stateNode));
       break;
     case 4:
-      d = X;
+      d = X$1;
       e = Xj;
-      X = c.stateNode.containerInfo;
+      X$1 = c.stateNode.containerInfo;
       Xj = true;
       Yj(a, b, c);
-      X = d;
+      X$1 = d;
       Xj = e;
       break;
     case 0:
@@ -5100,23 +5100,23 @@ function ck(a, b) {
       a: for (; null !== h; ) {
         switch (h.tag) {
           case 5:
-            X = h.stateNode;
+            X$1 = h.stateNode;
             Xj = false;
             break a;
           case 3:
-            X = h.stateNode.containerInfo;
+            X$1 = h.stateNode.containerInfo;
             Xj = true;
             break a;
           case 4:
-            X = h.stateNode.containerInfo;
+            X$1 = h.stateNode.containerInfo;
             Xj = true;
             break a;
         }
         h = h.return;
       }
-      if (null === X) throw Error(p(160));
+      if (null === X$1) throw Error(p(160));
       Zj(f2, g, e);
-      X = null;
+      X$1 = null;
       Xj = false;
       var k2 = e.alternate;
       null !== k2 && (k2.return = null);
@@ -7071,18 +7071,18 @@ const createLucideIcon = (iconName, iconNode) => {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$d = [
+const __iconNode$m = [
   ["path", { d: "M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16", key: "jecpp" }],
   ["rect", { width: "20", height: "14", x: "2", y: "6", rx: "2", key: "i6l2r4" }]
 ];
-const Briefcase = createLucideIcon("briefcase", __iconNode$d);
+const Briefcase = createLucideIcon("briefcase", __iconNode$m);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$c = [
+const __iconNode$l = [
   ["path", { d: "M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z", key: "1b4qmf" }],
   ["path", { d: "M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2", key: "i71pzd" }],
   ["path", { d: "M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2", key: "10jefs" }],
@@ -7091,49 +7091,66 @@ const __iconNode$c = [
   ["path", { d: "M10 14h4", key: "kelpxr" }],
   ["path", { d: "M10 18h4", key: "1ulq68" }]
 ];
-const Building2 = createLucideIcon("building-2", __iconNode$c);
+const Building2 = createLucideIcon("building-2", __iconNode$l);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$b = [
+const __iconNode$k = [
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
   ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
   ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
 ];
-const CircleAlert = createLucideIcon("circle-alert", __iconNode$b);
+const CircleAlert = createLucideIcon("circle-alert", __iconNode$k);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$a = [
+const __iconNode$j = [
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
   ["path", { d: "m9 12 2 2 4-4", key: "dzmm74" }]
 ];
-const CircleCheck = createLucideIcon("circle-check", __iconNode$a);
+const CircleCheck = createLucideIcon("circle-check", __iconNode$j);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$9 = [
+const __iconNode$i = [
   ["path", { d: "M15 3h6v6", key: "1q9fwt" }],
   ["path", { d: "M10 14 21 3", key: "gplh6r" }],
   ["path", { d: "M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6", key: "a6xqqp" }]
 ];
-const ExternalLink = createLucideIcon("external-link", __iconNode$9);
+const ExternalLink = createLucideIcon("external-link", __iconNode$i);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$8 = [
+const __iconNode$h = [
+  [
+    "path",
+    {
+      d: "M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z",
+      key: "1s6t7t"
+    }
+  ],
+  ["circle", { cx: "16.5", cy: "7.5", r: ".5", fill: "currentColor", key: "w0ekpg" }]
+];
+const KeyRound = createLucideIcon("key-round", __iconNode$h);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$g = [
   ["path", { d: "m5 8 6 6", key: "1wu5hv" }],
   ["path", { d: "m4 14 6-6 2-3", key: "1k1g8d" }],
   ["path", { d: "M2 5h12", key: "or177f" }],
@@ -7141,48 +7158,66 @@ const __iconNode$8 = [
   ["path", { d: "m22 22-5-10-5 10", key: "don7ne" }],
   ["path", { d: "M14 18h6", key: "1m8k6r" }]
 ];
-const Languages = createLucideIcon("languages", __iconNode$8);
+const Languages = createLucideIcon("languages", __iconNode$g);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$7 = [
+const __iconNode$f = [
+  [
+    "path",
+    {
+      d: "M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z",
+      key: "c2jq9f"
+    }
+  ],
+  ["rect", { width: "4", height: "12", x: "2", y: "9", key: "mk3on5" }],
+  ["circle", { cx: "4", cy: "4", r: "2", key: "bt5ra8" }]
+];
+const Linkedin = createLucideIcon("linkedin", __iconNode$f);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$e = [
   ["rect", { width: "18", height: "11", x: "3", y: "11", rx: "2", ry: "2", key: "1w4ew1" }],
   ["path", { d: "M7 11V7a5 5 0 0 1 10 0v4", key: "fwvmzm" }]
 ];
-const Lock = createLucideIcon("lock", __iconNode$7);
+const Lock = createLucideIcon("lock", __iconNode$e);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$6 = [
+const __iconNode$d = [
   ["path", { d: "m16 17 5-5-5-5", key: "1bji2h" }],
   ["path", { d: "M21 12H9", key: "dn1m92" }],
   ["path", { d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4", key: "1uf3rs" }]
 ];
-const LogOut = createLucideIcon("log-out", __iconNode$6);
+const LogOut = createLucideIcon("log-out", __iconNode$d);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$5 = [
+const __iconNode$c = [
   ["path", { d: "m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7", key: "132q7q" }],
   ["rect", { x: "2", y: "4", width: "20", height: "16", rx: "2", key: "izxlao" }]
 ];
-const Mail = createLucideIcon("mail", __iconNode$5);
+const Mail = createLucideIcon("mail", __iconNode$c);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$4 = [
+const __iconNode$b = [
   [
     "path",
     {
@@ -7192,24 +7227,80 @@ const __iconNode$4 = [
   ],
   ["circle", { cx: "12", cy: "10", r: "3", key: "ilqhr7" }]
 ];
-const MapPin = createLucideIcon("map-pin", __iconNode$4);
+const MapPin = createLucideIcon("map-pin", __iconNode$b);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$3 = [
+const __iconNode$a = [
   ["path", { d: "M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z", key: "a7tn18" }]
 ];
-const Moon = createLucideIcon("moon", __iconNode$3);
+const Moon = createLucideIcon("moon", __iconNode$a);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$2 = [
+const __iconNode$9 = [["polygon", { points: "6 3 20 12 6 21 6 3", key: "1oa8hb" }]];
+const Play = createLucideIcon("play", __iconNode$9);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$8 = [
+  ["path", { d: "M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8", key: "14sxne" }],
+  ["path", { d: "M3 3v5h5", key: "1xhq8a" }],
+  ["path", { d: "M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16", key: "1hlbsb" }],
+  ["path", { d: "M16 16h5v5", key: "ccwih5" }]
+];
+const RefreshCcw = createLucideIcon("refresh-ccw", __iconNode$8);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$7 = [
+  [
+    "path",
+    {
+      d: "M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z",
+      key: "1c8476"
+    }
+  ],
+  ["path", { d: "M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7", key: "1ydtos" }],
+  ["path", { d: "M7 3v4a1 1 0 0 0 1 1h7", key: "t51u73" }]
+];
+const Save = createLucideIcon("save", __iconNode$7);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$6 = [
+  [
+    "path",
+    {
+      d: "M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z",
+      key: "117uat"
+    }
+  ],
+  ["path", { d: "M6 12h16", key: "s4cdu5" }]
+];
+const SendHorizontal = createLucideIcon("send-horizontal", __iconNode$6);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$5 = [
   [
     "path",
     {
@@ -7219,14 +7310,27 @@ const __iconNode$2 = [
   ],
   ["path", { d: "m21.854 2.147-10.94 10.939", key: "12cjpa" }]
 ];
-const Send = createLucideIcon("send", __iconNode$2);
+const Send = createLucideIcon("send", __iconNode$5);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$1 = [
+const __iconNode$4 = [
+  ["path", { d: "M20 7h-9", key: "3s1dr2" }],
+  ["path", { d: "M14 17H5", key: "gfn3mx" }],
+  ["circle", { cx: "17", cy: "17", r: "3", key: "18b49y" }],
+  ["circle", { cx: "7", cy: "7", r: "3", key: "dfmy0x" }]
+];
+const Settings2 = createLucideIcon("settings-2", __iconNode$4);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$3 = [
   ["circle", { cx: "12", cy: "12", r: "4", key: "4exip2" }],
   ["path", { d: "M12 2v2", key: "tus03m" }],
   ["path", { d: "M12 20v2", key: "1lh1kg" }],
@@ -7237,7 +7341,36 @@ const __iconNode$1 = [
   ["path", { d: "m6.34 17.66-1.41 1.41", key: "1m8zz5" }],
   ["path", { d: "m19.07 4.93-1.41 1.41", key: "1shlcs" }]
 ];
-const Sun = createLucideIcon("sun", __iconNode$1);
+const Sun = createLucideIcon("sun", __iconNode$3);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$2 = [
+  ["path", { d: "M16 7h6v6", key: "box55l" }],
+  ["path", { d: "m22 7-8.5 8.5-5-5L2 17", key: "1t1m79" }]
+];
+const TrendingUp = createLucideIcon("trending-up", __iconNode$2);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$1 = [
+  [
+    "path",
+    {
+      d: "m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3",
+      key: "wmoenq"
+    }
+  ],
+  ["path", { d: "M12 9v4", key: "juzpu7" }],
+  ["path", { d: "M12 17h.01", key: "p32p05" }]
+];
+const TriangleAlert = createLucideIcon("triangle-alert", __iconNode$1);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -7245,19 +7378,38 @@ const Sun = createLucideIcon("sun", __iconNode$1);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode = [
-  ["path", { d: "M16 7h6v6", key: "box55l" }],
-  ["path", { d: "m22 7-8.5 8.5-5-5L2 17", key: "1t1m79" }]
+  ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
+  ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
 ];
-const TrendingUp = createLucideIcon("trending-up", __iconNode);
+const X = createLucideIcon("x", __iconNode);
 function getAlinhamentoColor(porcentagem) {
   if (porcentagem >= 80) return "bg-green-100 text-green-800";
   if (porcentagem >= 60) return "bg-yellow-100 text-yellow-800";
   return "bg-red-100 text-red-800";
 }
-function AnalysisCard({ vaga }) {
+function AnalysisCard({
+  vaga,
+  onSubmitSingle,
+  running,
+  selected,
+  onToggleSelect
+}) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `card ${vaga.submetido ? "border-l-4 border-l-green-500" : ""}`, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4 flex items-start justify-between gap-3", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "mb-2 inline-flex cursor-pointer items-center gap-2 text-xs font-medium text-gray-600 dark:text-slate-300", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "checkbox",
+              checked: selected,
+              disabled: running || vaga.submetido,
+              onChange: (event) => onToggleSelect(vaga.id, event.target.checked),
+              className: "h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 disabled:opacity-60"
+            }
+          ),
+          "Selecionar para submitter"
+        ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-lg font-bold text-gray-900 dark:text-slate-100", children: vaga.cargo }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-2 flex flex-wrap items-center gap-2 text-sm text-gray-600 dark:text-slate-300", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "inline-flex items-center gap-1", children: [
@@ -7319,10 +7471,22 @@ function AnalysisCard({ vaga }) {
           item
         ] }, `${vaga.id}-risk-${idx}`)) })
       ] })
-    ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 flex justify-end", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "button",
+      {
+        disabled: running || vaga.submetido,
+        onClick: () => void onSubmitSingle(vaga),
+        className: "inline-flex items-center gap-2 rounded-lg bg-primary-600 px-3 py-2 text-sm font-medium text-white hover:bg-primary-700 disabled:opacity-60",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(SendHorizontal, { className: "h-4 w-4" }),
+          "Submeter"
+        ]
+      }
+    ) })
   ] });
 }
-function DashboardHeader({ darkMode, onToggleTheme, onLogout }) {
+function DashboardHeader({ darkMode, onToggleTheme, onLogout, actions }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("header", { className: "sticky top-0 z-10 border-b border-gray-200 bg-white/90 backdrop-blur dark:border-slate-700 dark:bg-slate-900/90", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-lg bg-primary-100 p-2 text-primary-700", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Briefcase, { className: "h-5 w-5" }) }),
@@ -7332,6 +7496,7 @@ function DashboardHeader({ darkMode, onToggleTheme, onLogout }) {
       ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+      actions,
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "button",
         {
@@ -7362,6 +7527,7 @@ function Loading({ label = "Carregando..." }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex min-h-[200px] items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm text-gray-600 dark:text-gray-300", children: label }) });
 }
 const API_URL = "http://localhost:3000";
+const apiUrl = API_URL;
 class ApiError extends Error {
   constructor(message, status) {
     super(message);
@@ -7419,20 +7585,31 @@ async function fetchAnalises(token) {
     (a, b) => (b.porcentagemAlinhamento || 0) - (a.porcentagemAlinhamento || 0)
   );
 }
+function getMissingSetup$1(geminiKey, hasLinkedInSession) {
+  const missing = [];
+  if (!geminiKey.trim()) missing.push("Salvar a chave do Gemini");
+  if (!hasLinkedInSession) missing.push("Concluir login no LinkedIn");
+  return missing;
+}
 function Dashboard({
   token,
   darkMode,
   onToggleTheme,
   onLogout,
-  onSessionExpired
+  onSessionExpired,
+  onOpenSetup,
+  onOpenPrefill
 }) {
   const [analises, setAnalises] = reactExports.useState([]);
   const [loading, setLoading] = reactExports.useState(true);
-  const [error, setError] = reactExports.useState("");
+  const [loadError, setLoadError] = reactExports.useState("");
+  const [feedback, setFeedback] = reactExports.useState(null);
+  const [busyAction, setBusyAction] = reactExports.useState("");
+  const [selectedIds, setSelectedIds] = reactExports.useState([]);
   reactExports.useEffect(() => {
     const load = async () => {
       setLoading(true);
-      setError("");
+      setLoadError("");
       try {
         const data = await fetchAnalises(token);
         setAnalises(data);
@@ -7441,24 +7618,173 @@ function Dashboard({
           await onSessionExpired();
           return;
         }
-        setError("Nao foi possivel carregar as analises.");
+        setLoadError("Nao foi possivel carregar as analises.");
       } finally {
         setLoading(false);
       }
     };
     void load();
   }, [token, onSessionExpired]);
+  reactExports.useEffect(() => {
+    setSelectedIds((prev) => prev.filter((id2) => analises.some((vaga) => vaga.id === id2 && !vaga.submetido)));
+  }, [analises]);
+  const runAction = async (name, fn) => {
+    setBusyAction(name);
+    setFeedback(null);
+    try {
+      await fn();
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Falha ao executar acao do submitter.";
+      setFeedback({ kind: "error", text: msg });
+    } finally {
+      setBusyAction("");
+    }
+  };
+  const selectableAnalises = reactExports.useMemo(() => analises.filter((vaga) => !vaga.submetido), [analises]);
+  const selectedVagas = reactExports.useMemo(() => analises.filter((vaga) => selectedIds.includes(vaga.id)), [analises, selectedIds]);
+  const allSelected = selectableAnalises.length > 0 && selectableAnalises.every((vaga) => selectedIds.includes(vaga.id));
+  const refreshAnalises = async () => {
+    const data = await fetchAnalises(token);
+    setAnalises(data);
+  };
+  const runSubmitter = async () => {
+    const cfg = await window.desktop.submitter.getConfig();
+    const missing = getMissingSetup$1(cfg.geminiApiKey || "", Boolean(cfg.hasLinkedInSession));
+    if (missing.length > 0) {
+      setFeedback({ kind: "error", text: `Falta configurar: ${missing.join(" | ")}.` });
+      onOpenSetup();
+      return;
+    }
+    if (!cfg.hasPrefillProfile) {
+      setFeedback({
+        kind: "error",
+        text: "Preencha o perfil de respostas genericas para reduzir tokens e aumentar a precisao antes de submeter."
+      });
+      onOpenPrefill();
+      return;
+    }
+    if (selectedVagas.length === 0) {
+      setFeedback({ kind: "error", text: "Selecione pelo menos uma vaga para iniciar o submitter." });
+      return;
+    }
+    await runAction("run", async () => {
+      const result = await window.desktop.submitter.run(selectedVagas);
+      setFeedback({ kind: "success", text: `Submitter concluido: ${result.success}/${result.total} submetidas.` });
+      await refreshAnalises();
+    });
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen bg-gray-50 dark:bg-slate-900", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(DashboardHeader, { darkMode, onToggleTheme, onLogout }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      DashboardHeader,
+      {
+        darkMode,
+        onToggleTheme,
+        onLogout,
+        actions: /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              onClick: onOpenPrefill,
+              className: "inline-flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-800",
+              children: "Perfil de Respostas"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
+            {
+              onClick: onOpenSetup,
+              className: "inline-flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-800",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Settings2, { className: "h-4 w-4" }),
+                "Configuracao"
+              ]
+            }
+          )
+        ] })
+      }
+    ),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("main", { className: "mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "mb-6 card space-y-4", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-start justify-between gap-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-semibold text-gray-900 dark:text-slate-100", children: "Vagas analisadas" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-500 dark:text-slate-400", children: "Selecione as vagas desejadas para submissao em lote no submitter." })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
+            {
+              disabled: !!busyAction || analises.length === 0,
+              onClick: () => void runSubmitter(),
+              className: "inline-flex items-center gap-2 rounded-lg bg-primary-600 px-3 py-2 text-sm font-medium text-white hover:bg-primary-700 disabled:opacity-60",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { className: "h-4 w-4" }),
+                "Iniciar Submitter (",
+                selectedVagas.length,
+                ")"
+              ]
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "inline-flex items-center gap-2 text-sm text-gray-700 dark:text-slate-300", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "checkbox",
+              checked: allSelected,
+              disabled: !!busyAction || selectableAnalises.length === 0,
+              onChange: (event) => {
+                if (event.target.checked) {
+                  setSelectedIds(selectableAnalises.map((vaga) => vaga.id));
+                } else {
+                  setSelectedIds([]);
+                }
+              },
+              className: "h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 disabled:opacity-60"
+            }
+          ),
+          "Selecionar todas as vagas nao submetidas"
+        ] })
+      ] }),
+      feedback ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "section",
+        {
+          className: `mb-4 rounded-lg border p-3 text-sm ${feedback.kind === "error" ? "border-red-200 bg-red-50 text-red-700 dark:border-red-900/60 dark:bg-red-950/20 dark:text-red-300" : "border-green-200 bg-green-50 text-green-700 dark:border-green-900/60 dark:bg-green-950/20 dark:text-green-300"}`,
+          children: feedback.text
+        }
+      ) : null,
       /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "mb-6 card", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-500 dark:text-slate-400", children: "Total de analises" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-2xl font-semibold text-gray-900 dark:text-slate-100", children: analises.length })
       ] }),
       loading ? /* @__PURE__ */ jsxRuntimeExports.jsx(Loading, { label: "Carregando analises..." }) : null,
-      !loading && error ? /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyState, { message: error }) : null,
-      !loading && !error && analises.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyState, { message: "Nenhuma analise realizada" }) : null,
-      !loading && !error && analises.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3", children: analises.map((vaga) => /* @__PURE__ */ jsxRuntimeExports.jsx(AnalysisCard, { vaga }, vaga.id)) }) : null
+      !loading && loadError ? /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyState, { message: loadError }) : null,
+      !loading && !loadError && analises.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyState, { message: "Nenhuma analise realizada" }) : null,
+      !loading && !loadError && analises.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3", children: analises.map((vaga) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        AnalysisCard,
+        {
+          vaga,
+          running: !!busyAction,
+          selected: selectedIds.includes(vaga.id),
+          onToggleSelect: (vagaId, checked) => {
+            if (checked) {
+              setSelectedIds((prev) => Array.from(/* @__PURE__ */ new Set([...prev, vagaId])));
+            } else {
+              setSelectedIds((prev) => prev.filter((id2) => id2 !== vagaId));
+            }
+          },
+          onSubmitSingle: async (selected) => {
+            await runAction(`single-${selected.id}`, async () => {
+              const ok2 = await window.desktop.submitter.runSingle(selected);
+              setFeedback({
+                kind: ok2 ? "success" : "error",
+                text: ok2 ? "Submissao individual concluida." : "Submissao individual nao concluida."
+              });
+              await refreshAnalises();
+            });
+          }
+        },
+        vaga.id
+      )) }) : null
     ] })
   ] });
 }
@@ -7538,6 +7864,543 @@ function Login({ darkMode, loading, error, onToggleTheme, onSubmit }) {
     ] }) })
   ] });
 }
+const confidenceOptions = ["Basico", "Intermediario", "Avancado", "Fluente"];
+const discoveryOptions = [
+  "LinkedIn",
+  "Indicacao",
+  "Site da empresa",
+  "Recrutador",
+  "Comunidade/Evento",
+  "Outro"
+];
+const familyOptions = ["Nao", "Sim", "Prefiro nao informar"];
+const defaultProfile = {
+  currentCity: "",
+  currentCompany: "",
+  englishConfidence: "",
+  englishComfortText: "",
+  spanishConfidence: "",
+  jobDiscoverySource: "LinkedIn",
+  hasFamilyAtCompany: "Nao",
+  salaryExpectationClt: "A combinar",
+  currentSalaryAndBenefits: "Prefiro nao informar no momento.",
+  dataProcessingConsent: true,
+  contactConsent: true
+};
+function isPrefillComplete(profile) {
+  const required = [
+    profile.currentCity,
+    profile.currentCompany,
+    profile.englishConfidence,
+    profile.englishComfortText,
+    profile.spanishConfidence,
+    profile.jobDiscoverySource,
+    profile.hasFamilyAtCompany,
+    profile.salaryExpectationClt
+  ];
+  return required.every((value) => value.trim().length > 0);
+}
+function Prefill({
+  darkMode,
+  onToggleTheme,
+  onLogout,
+  onBackToSetup,
+  onContinueToDashboard
+}) {
+  const [profile, setProfile] = reactExports.useState(defaultProfile);
+  const [loading, setLoading] = reactExports.useState(true);
+  const [saving, setSaving] = reactExports.useState(false);
+  const [feedback, setFeedback] = reactExports.useState("");
+  const complete = reactExports.useMemo(() => isPrefillComplete(profile), [profile]);
+  const load = async () => {
+    setLoading(true);
+    try {
+      const data = await window.desktop.submitter.getPrefillProfile();
+      setProfile({ ...defaultProfile, ...data });
+    } finally {
+      setLoading(false);
+    }
+  };
+  reactExports.useEffect(() => {
+    void load();
+  }, []);
+  const save = async () => {
+    setSaving(true);
+    setFeedback("");
+    try {
+      await window.desktop.submitter.setPrefillProfile(profile);
+      setFeedback("Perfil de respostas salvo com sucesso.");
+      return true;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Nao foi possivel salvar o perfil de respostas.";
+      setFeedback(message);
+      return false;
+    } finally {
+      setSaving(false);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen bg-gray-50 dark:bg-slate-900", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      DashboardHeader,
+      {
+        darkMode,
+        onToggleTheme,
+        onLogout,
+        actions: /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              onClick: onBackToSetup,
+              className: "inline-flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-800",
+              children: "Voltar ao Setup"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
+            {
+              onClick: () => void save(),
+              disabled: saving,
+              className: "inline-flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50 disabled:opacity-60 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-800",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Save, { className: "h-4 w-4" }),
+                "Salvar"
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              onClick: () => {
+                if (!complete) {
+                  setFeedback("Preencha os campos obrigatorios para otimizar a inferencia antes de continuar.");
+                  return;
+                }
+                void (async () => {
+                  const ok2 = await save();
+                  if (ok2) onContinueToDashboard();
+                })();
+              },
+              disabled: saving,
+              className: "inline-flex items-center gap-2 rounded-lg bg-primary-600 px-3 py-2 text-sm font-medium text-white hover:bg-primary-700 disabled:opacity-60",
+              children: "Ir para Vagas"
+            }
+          )
+        ] })
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "mx-auto max-w-5xl px-4 py-6 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "card space-y-5", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-lg font-semibold text-gray-900 dark:text-slate-100", children: "Pre-preenchimento inteligente" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-1 text-sm text-gray-500 dark:text-slate-400", children: "Esses dados alimentam respostas genericas do LinkedIn Easy Apply e reduzem o uso de tokens da IA." })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-lg border border-gray-200 p-3 dark:border-slate-700", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-500 dark:text-slate-400", children: "Status do perfil" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "mt-1 flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-slate-100", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: `h-4 w-4 ${complete ? "text-green-600" : "text-amber-600"}` }),
+          complete ? "Completo" : "Pendente de campos obrigatorios"
+        ] })
+      ] }),
+      loading ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-500 dark:text-slate-400", children: "Carregando perfil..." }) : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 gap-4 md:grid-cols-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "block", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mb-1 block text-xs text-gray-600 dark:text-slate-300", children: "Cidade atual *" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              value: profile.currentCity,
+              onChange: (event) => setProfile((prev) => ({ ...prev, currentCity: event.target.value })),
+              className: "w-full rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm outline-none dark:border-slate-600",
+              placeholder: "Ex: Sao Paulo - SP"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "block", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mb-1 block text-xs text-gray-600 dark:text-slate-300", children: "Empresa atual *" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              value: profile.currentCompany,
+              onChange: (event) => setProfile((prev) => ({ ...prev, currentCompany: event.target.value })),
+              className: "w-full rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm outline-none dark:border-slate-600",
+              placeholder: "Ex: NT Consult - Telefonica"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "block", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mb-1 block text-xs text-gray-600 dark:text-slate-300", children: "Confianca em ingles (select) *" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "select",
+            {
+              value: profile.englishConfidence,
+              onChange: (event) => setProfile((prev) => ({ ...prev, englishConfidence: event.target.value })),
+              className: "w-full rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm outline-none dark:border-slate-600",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "", children: "Selecione..." }),
+                confidenceOptions.map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: option, children: option }, `en-${option}`))
+              ]
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "block", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mb-1 block text-xs text-gray-600 dark:text-slate-300", children: "Confianca em espanhol (select) *" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "select",
+            {
+              value: profile.spanishConfidence,
+              onChange: (event) => setProfile((prev) => ({ ...prev, spanishConfidence: event.target.value })),
+              className: "w-full rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm outline-none dark:border-slate-600",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "", children: "Selecione..." }),
+                confidenceOptions.map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: option, children: option }, `es-${option}`))
+              ]
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "block md:col-span-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mb-1 block text-xs text-gray-600 dark:text-slate-300", children: "Confortavel em ambiente em ingles? *" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              value: profile.englishComfortText,
+              onChange: (event) => setProfile((prev) => ({ ...prev, englishComfortText: event.target.value })),
+              className: "w-full rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm outline-none dark:border-slate-600",
+              placeholder: "Ex: Sim, me sinto confortavel para colaborar em ingles no dia a dia."
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "block", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mb-1 block text-xs text-gray-600 dark:text-slate-300", children: "Como ficou sabendo da vaga? *" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "select",
+            {
+              value: profile.jobDiscoverySource,
+              onChange: (event) => setProfile((prev) => ({ ...prev, jobDiscoverySource: event.target.value })),
+              className: "w-full rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm outline-none dark:border-slate-600",
+              children: discoveryOptions.map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: option, children: option }, `src-${option}`))
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "block", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mb-1 block text-xs text-gray-600 dark:text-slate-300", children: "Possui familiar na empresa? *" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "select",
+            {
+              value: profile.hasFamilyAtCompany,
+              onChange: (event) => setProfile((prev) => ({ ...prev, hasFamilyAtCompany: event.target.value })),
+              className: "w-full rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm outline-none dark:border-slate-600",
+              children: familyOptions.map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: option, children: option }, `fam-${option}`))
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "block md:col-span-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mb-1 block text-xs text-gray-600 dark:text-slate-300", children: "Pretensao salarial CLT *" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              value: profile.salaryExpectationClt,
+              onChange: (event) => setProfile((prev) => ({ ...prev, salaryExpectationClt: event.target.value })),
+              className: "w-full rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm outline-none dark:border-slate-600",
+              placeholder: "Ex: R$ 12.000 a R$ 14.000 CLT (negociavel)"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "block md:col-span-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mb-1 block text-xs text-gray-600 dark:text-slate-300", children: "Salario atual/ultimo e beneficios (opcional)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              value: profile.currentSalaryAndBenefits,
+              onChange: (event) => setProfile((prev) => ({ ...prev, currentSalaryAndBenefits: event.target.value })),
+              className: "w-full rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm outline-none dark:border-slate-600",
+              placeholder: "Ex: Prefiro nao informar no momento."
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "inline-flex items-center gap-2 text-sm text-gray-700 dark:text-slate-300", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "checkbox",
+              checked: profile.dataProcessingConsent,
+              onChange: (event) => setProfile((prev) => ({ ...prev, dataProcessingConsent: event.target.checked })),
+              className: "h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+            }
+          ),
+          "Concordo com o processamento de dados para recrutamento"
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "inline-flex items-center gap-2 text-sm text-gray-700 dark:text-slate-300", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "checkbox",
+              checked: profile.contactConsent,
+              onChange: (event) => setProfile((prev) => ({ ...prev, contactConsent: event.target.checked })),
+              className: "h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+            }
+          ),
+          "Autorizo contato sobre novas oportunidades"
+        ] })
+      ] }),
+      feedback ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-700 dark:text-slate-200", children: feedback }) : null
+    ] }) })
+  ] });
+}
+function getMissingSetup(geminiKey, hasLinkedInSession) {
+  const missing = [];
+  if (!geminiKey.trim()) missing.push("Salvar a chave do Gemini");
+  if (!hasLinkedInSession) missing.push("Concluir login no LinkedIn");
+  return missing;
+}
+function Setup({ token, darkMode, onToggleTheme, onLogout, onContinue }) {
+  const [geminiKey, setGeminiKey] = reactExports.useState("");
+  const [hasLinkedInSession, setHasLinkedInSession] = reactExports.useState(false);
+  const [cv, setCv] = reactExports.useState("");
+  const [busyAction, setBusyAction] = reactExports.useState("");
+  const [feedback, setFeedback] = reactExports.useState(null);
+  const [showSetupModal, setShowSetupModal] = reactExports.useState(true);
+  const [hasPrefillProfile, setHasPrefillProfile] = reactExports.useState(false);
+  const setupMissing = reactExports.useMemo(() => getMissingSetup(geminiKey, hasLinkedInSession), [geminiKey, hasLinkedInSession]);
+  const setupComplete = setupMissing.length === 0;
+  const runAction = async (name, fn) => {
+    setBusyAction(name);
+    setFeedback(null);
+    try {
+      await fn();
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Falha ao executar acao de configuracao.";
+      setFeedback({ kind: "error", text: msg });
+    } finally {
+      setBusyAction("");
+    }
+  };
+  const refreshConfig = async () => {
+    const cfg = await window.desktop.submitter.getConfig();
+    setGeminiKey(cfg.geminiApiKey || "");
+    setHasLinkedInSession(Boolean(cfg.hasLinkedInSession));
+    setHasPrefillProfile(Boolean(cfg.hasPrefillProfile));
+    if (!cfg.geminiApiKey || !cfg.hasLinkedInSession) {
+      setShowSetupModal(true);
+    }
+  };
+  const refreshCv = async () => {
+    await runAction("get-cv", async () => {
+      const cvContent = await window.desktop.submitter.getUserCv(token, apiUrl);
+      setCv(cvContent);
+      setFeedback({ kind: "success", text: "CV carregado do endpoint /users/me." });
+    });
+  };
+  const saveGemini = async () => {
+    await runAction("save-gemini", async () => {
+      await window.desktop.submitter.setGeminiKey(geminiKey);
+      await refreshConfig();
+      setFeedback({ kind: "success", text: "Chave do Gemini salva com sucesso." });
+    });
+  };
+  const doLinkedinLogin = async () => {
+    await runAction("linkedin", async () => {
+      await window.desktop.submitter.linkedinLogin();
+      await refreshConfig();
+      setFeedback({ kind: "success", text: "Sessao do LinkedIn salva com sucesso." });
+    });
+  };
+  reactExports.useEffect(() => {
+    void refreshConfig();
+    void refreshCv();
+  }, [token]);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen bg-gray-50 dark:bg-slate-900", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      DashboardHeader,
+      {
+        darkMode,
+        onToggleTheme,
+        onLogout,
+        actions: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            onClick: () => {
+              if (!setupComplete) {
+                setShowSetupModal(true);
+                setFeedback({ kind: "error", text: `Falta configurar: ${setupMissing.join(" | ")}.` });
+                return;
+              }
+              onContinue();
+            },
+            className: "inline-flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-800",
+            children: "Ir para Pre-preenchimento"
+          }
+        )
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "mx-auto max-w-4xl px-4 py-6 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "card space-y-5", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-lg font-semibold text-gray-900 dark:text-slate-100", children: "Configuracao previa obrigatoria" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-1 text-sm text-gray-500 dark:text-slate-400", children: "Finalize os dois passos para liberar a tela de pre-preenchimento e iniciar submissoes com menor uso de tokens." })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 gap-3 md:grid-cols-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-lg border border-gray-200 p-3 dark:border-slate-700", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-500 dark:text-slate-400", children: "Chave Gemini" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-1 flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-slate-100", children: geminiKey.trim() ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-4 w-4 text-green-600" }),
+            "Configurada"
+          ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(TriangleAlert, { className: "h-4 w-4 text-amber-600" }),
+            "Pendente"
+          ] }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-lg border border-gray-200 p-3 dark:border-slate-700", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-500 dark:text-slate-400", children: "Login LinkedIn (sessao)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-1 flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-slate-100", children: hasLinkedInSession ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-4 w-4 text-green-600" }),
+            "Sessao ativa"
+          ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(TriangleAlert, { className: "h-4 w-4 text-amber-600" }),
+            "Pendente"
+          ] }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-lg border border-gray-200 p-3 dark:border-slate-700 md:col-span-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-500 dark:text-slate-400", children: "Perfil de respostas genericas" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-1 flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-slate-100", children: hasPrefillProfile ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-4 w-4 text-green-600" }),
+            "Preenchido"
+          ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(TriangleAlert, { className: "h-4 w-4 text-amber-600" }),
+            "Ainda sera preenchido na proxima tela"
+          ] }) })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "block", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mb-1 block text-xs text-gray-600 dark:text-slate-300", children: "CV do usuario (/users/me)" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "textarea",
+          {
+            value: cv,
+            onChange: (e) => setCv(e.target.value),
+            rows: 8,
+            className: "w-full rounded-lg border border-gray-300 bg-transparent p-2 text-xs outline-none dark:border-slate-600",
+            placeholder: "CV carregado automaticamente."
+          }
+        )
+      ] }),
+      feedback ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "section",
+        {
+          className: `rounded-lg border p-3 text-sm ${feedback.kind === "error" ? "border-red-200 bg-red-50 text-red-700 dark:border-red-900/60 dark:bg-red-950/20 dark:text-red-300" : "border-green-200 bg-green-50 text-green-700 dark:border-green-900/60 dark:bg-green-950/20 dark:text-green-300"}`,
+          children: feedback.text
+        }
+      ) : null,
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap gap-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            disabled: !!busyAction,
+            onClick: () => setShowSetupModal(true),
+            className: "inline-flex items-center gap-2 rounded-lg bg-primary-600 px-3 py-2 text-sm font-medium text-white hover:bg-primary-700 disabled:opacity-60",
+            children: "Configurar Agora"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            disabled: !!busyAction,
+            onClick: () => void refreshConfig(),
+            className: "inline-flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50 disabled:opacity-60 dark:border-slate-600 dark:hover:bg-slate-800",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCcw, { className: "h-4 w-4" }),
+              "Atualizar Status"
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            disabled: !!busyAction,
+            onClick: () => void refreshCv(),
+            className: "inline-flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50 disabled:opacity-60 dark:border-slate-600 dark:hover:bg-slate-800",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCcw, { className: "h-4 w-4" }),
+              "Atualizar CV"
+            ]
+          }
+        )
+      ] })
+    ] }) }),
+    showSetupModal ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-20 flex items-center justify-center bg-slate-950/50 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-xl rounded-xl border border-gray-200 bg-white p-5 shadow-xl dark:border-slate-700 dark:bg-slate-900", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4 flex items-start justify-between gap-4", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-lg font-semibold text-gray-900 dark:text-slate-100", children: "Configuracao inicial" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-1 text-sm text-gray-500 dark:text-slate-400", children: "Cole sua chave Gemini e conclua o login no LinkedIn para continuar." })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            onClick: () => setShowSetupModal(false),
+            className: "rounded-md p-1 text-gray-500 hover:bg-gray-100 dark:text-slate-300 dark:hover:bg-slate-800",
+            title: "Fechar",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-4 w-4" })
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "block", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mb-1 block text-xs text-gray-600 dark:text-slate-300", children: "Chave Gemini" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center rounded-lg border border-gray-300 px-2 dark:border-slate-600", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(KeyRound, { className: "h-4 w-4 text-gray-400" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              value: geminiKey,
+              onChange: (e) => setGeminiKey(e.target.value),
+              className: "w-full bg-transparent px-2 py-2 text-sm outline-none",
+              placeholder: "Cole aqui a chave AIza..."
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              disabled: !!busyAction,
+              onClick: () => void saveGemini(),
+              className: "rounded-md bg-primary-600 px-2 py-1 text-xs text-white disabled:opacity-60",
+              title: "Salvar chave Gemini",
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(Save, { className: "h-3.5 w-3.5" })
+            }
+          )
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-3 rounded-lg border border-gray-200 p-3 dark:border-slate-700", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-500 dark:text-slate-400", children: "LinkedIn" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-1 text-sm text-gray-900 dark:text-slate-100", children: "Abra o fluxo de login e finalize a autenticacao para salvar a sessao." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            disabled: !!busyAction,
+            onClick: () => void doLinkedinLogin(),
+            className: "mt-3 inline-flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50 disabled:opacity-60 dark:border-slate-600 dark:hover:bg-slate-800",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Linkedin, { className: "h-4 w-4" }),
+              "Login LinkedIn"
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-4 flex items-center justify-between", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-500 dark:text-slate-400", children: setupComplete ? "Tudo pronto. Voce seguira para o pre-preenchimento inteligente." : "Finalize os dois passos para continuar." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            onClick: () => {
+              if (!setupComplete) {
+                setFeedback({ kind: "error", text: `Falta configurar: ${setupMissing.join(" | ")}.` });
+                return;
+              }
+              setShowSetupModal(false);
+              onContinue();
+            },
+            className: "rounded-lg bg-primary-600 px-3 py-2 text-sm font-medium text-white hover:bg-primary-700",
+            children: setupComplete ? "Concluir e avancar" : "Validar"
+          }
+        )
+      ] })
+    ] }) }) : null
+  ] });
+}
 function getErrorMessage(error) {
   if (error instanceof ApiError) {
     const msg = error.message.toLowerCase();
@@ -7572,7 +8435,17 @@ function App() {
         return;
       }
       setToken(savedToken);
-      setView("dashboard");
+      try {
+        const cfg = await window.desktop.submitter.getConfig();
+        const setupComplete = Boolean(cfg.geminiApiKey?.trim()) && Boolean(cfg.hasLinkedInSession);
+        if (!setupComplete) {
+          setView("setup");
+          return;
+        }
+        setView(cfg.hasPrefillProfile ? "dashboard" : "prefill");
+      } catch {
+        setView("setup");
+      }
     };
     void restore();
   }, []);
@@ -7604,7 +8477,17 @@ function App() {
           try {
             const jwt = await login(email, senha);
             setToken(jwt);
-            setView("dashboard");
+            try {
+              const cfg = await window.desktop.submitter.getConfig();
+              const setupComplete = Boolean(cfg.geminiApiKey?.trim()) && Boolean(cfg.hasLinkedInSession);
+              if (!setupComplete) {
+                setView("setup");
+              } else {
+                setView(cfg.hasPrefillProfile ? "dashboard" : "prefill");
+              }
+            } catch {
+              setView("setup");
+            }
             try {
               await window.desktop.auth.setToken(jwt);
             } catch (persistError) {
@@ -7620,6 +8503,30 @@ function App() {
       }
     );
   }
+  if (view === "setup") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Setup,
+      {
+        token: token || "",
+        darkMode,
+        onToggleTheme: () => setDarkMode((prev) => !prev),
+        onLogout: actions.logout,
+        onContinue: () => setView("prefill")
+      }
+    );
+  }
+  if (view === "prefill") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Prefill,
+      {
+        darkMode,
+        onToggleTheme: () => setDarkMode((prev) => !prev),
+        onLogout: actions.logout,
+        onBackToSetup: () => setView("setup"),
+        onContinueToDashboard: () => setView("dashboard")
+      }
+    );
+  }
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     Dashboard,
     {
@@ -7627,6 +8534,8 @@ function App() {
       darkMode,
       onToggleTheme: () => setDarkMode((prev) => !prev),
       onLogout: actions.logout,
+      onOpenSetup: () => setView("setup"),
+      onOpenPrefill: () => setView("prefill"),
       onSessionExpired: async () => {
         await actions.logout();
         setError("Sessao expirada. Faca login novamente.");

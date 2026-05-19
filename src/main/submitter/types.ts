@@ -25,4 +25,20 @@ export interface VagaAnalisada extends Vaga {
 
 export interface SubmitterConfig {
   geminiApiKey: string;
+  hasLinkedInSession: boolean;
+  hasPrefillProfile: boolean;
+}
+
+export interface SubmitterPrefillProfile {
+  currentCity: string;
+  currentCompany: string;
+  englishConfidence: string;
+  englishComfortText: string;
+  spanishConfidence: string;
+  jobDiscoverySource: string;
+  hasFamilyAtCompany: string;
+  salaryExpectationClt: string;
+  currentSalaryAndBenefits: string;
+  dataProcessingConsent: boolean;
+  contactConsent: boolean;
 }

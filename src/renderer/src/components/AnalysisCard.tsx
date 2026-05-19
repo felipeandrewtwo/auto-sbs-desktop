@@ -21,15 +21,29 @@ export function AnalysisCard({
   vaga,
   onSubmitSingle,
   running,
+  selected,
+  onToggleSelect,
 }: {
   vaga: VagaAnalisada;
   onSubmitSingle: (vaga: VagaAnalisada) => Promise<void>;
   running: boolean;
+  selected: boolean;
+  onToggleSelect: (vagaId: string, checked: boolean) => void;
 }) {
   return (
     <div className={`card ${vaga.submetido ? "border-l-4 border-l-green-500" : ""}`}>
       <div className="mb-4 flex items-start justify-between gap-3">
         <div>
+          <label className="mb-2 inline-flex cursor-pointer items-center gap-2 text-xs font-medium text-gray-600 dark:text-slate-300">
+            <input
+              type="checkbox"
+              checked={selected}
+              disabled={running || vaga.submetido}
+              onChange={(event) => onToggleSelect(vaga.id, event.target.checked)}
+              className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 disabled:opacity-60"
+            />
+            Selecionar para submitter
+          </label>
           <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100">{vaga.cargo}</h3>
           <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-gray-600 dark:text-slate-300">
             <span className="inline-flex items-center gap-1">

@@ -1,26 +1,159 @@
 import fs from "node:fs";
+import { createRequire } from "node:module";
 import path from "node:path";
-import type { SubmitterConfig, VagaAnalisada } from "./types";
+import type { SubmitterConfig, SubmitterPrefillProfile, VagaAnalisada } from "./types";
 
 const ROOT_DIR = path.resolve(process.cwd());
 const STATE_PATH = path.join(ROOT_DIR, "state.json");
 const DESKTOP_SETTINGS_PATH = path.join(ROOT_DIR, "desktop", "settings.json");
 const CV_PATH = path.join(ROOT_DIR, "input", "cv.md");
+const LINKEDIN_ROOT_FROM_ENV = (process.env.AUTO_SBS_LINKEDIN_PATH || "").trim();
 
-function readSettings(): SubmitterConfig {
+let cachedLinkedinRoot: string | null = null;
+
+const DEFAULT_PREFILL_PROFILE: SubmitterPrefillProfile = {
+  currentCity: "",
+  currentCompany: "",
+  englishConfidence: "",
+  englishComfortText: "",
+  spanishConfidence: "",
+  jobDiscoverySource: "LinkedIn",
+  hasFamilyAtCompany: "Nao",
+  salaryExpectationClt: "A combinar",
+  currentSalaryAndBenefits: "Prefiro nao informar no momento.",
+  dataProcessingConsent: true,
+  contactConsent: true,
+};
+
+type StoredDesktopSettings = {
+  geminiApiKey?: string;
+  prefillProfile?: Partial<SubmitterPrefillProfile>;
+};
+
+function resolveLinkedinProjectRoot(): string {
+  if (cachedLinkedinRoot) return cachedLinkedinRoot;
+
+  const candidates = [
+    LINKEDIN_ROOT_FROM_ENV,
+    path.join(ROOT_DIR, "node_modules", "auto-sbs-linkedin"),
+    path.resolve(ROOT_DIR, "..", "auto-sbs-linkedin"),
+  ].filter(Boolean);
+
+  for (const candidate of candidates) {
+    if (fs.existsSync(path.join(candidate, "package.json"))) {
+      cachedLinkedinRoot = candidate;
+      return candidate;
+    }
+  }
+
+  throw new Error(
+    "Nao foi possivel localizar o projeto auto-sbs-linkedin. Defina AUTO_SBS_LINKEDIN_PATH com o caminho absoluto do repositorio.",
+  );
+}
+
+function getLinkedinRequire() {
+  const packageJsonPath = path.join(resolveLinkedinProjectRoot(), "package.json");
+  return createRequire(packageJsonPath);
+}
+
+function loadChromium() {
   try {
-    if (!fs.existsSync(DESKTOP_SETTINGS_PATH)) return { geminiApiKey: "" };
-    const parsed = JSON.parse(fs.readFileSync(DESKTOP_SETTINGS_PATH, "utf8"));
-    return { geminiApiKey: parsed?.geminiApiKey || "" };
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { chromium } = require("playwright");
+    return chromium;
   } catch {
-    return { geminiApiKey: "" };
+    const linkedRequire = getLinkedinRequire();
+    const { chromium } = linkedRequire("playwright");
+    return chromium;
   }
 }
 
-function saveSettings(config: SubmitterConfig): void {
+function registerTsNodeTranspileOnly(): void {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require("ts-node/register/transpile-only");
+    return;
+  } catch {
+    // noop
+  }
+
+  const linkedRequire = getLinkedinRequire();
+  linkedRequire("ts-node/register/transpile-only");
+}
+
+function resolveLegacySubmitModulePath(): string {
+  const localSubmitterModule = path.join(ROOT_DIR, "src", "modules", "submitter", "submit.ts");
+  if (fs.existsSync(localSubmitterModule)) return localSubmitterModule;
+
+  const linkedSubmitterModule = path.join(resolveLinkedinProjectRoot(), "src", "modules", "submitter", "submit.ts");
+  if (fs.existsSync(linkedSubmitterModule)) return linkedSubmitterModule;
+
+  throw new Error("Nao foi possivel localizar src/modules/submitter/submit.ts.");
+}
+
+function normalizeString(value: unknown): string {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function normalizeBoolean(value: unknown, fallback: boolean): boolean {
+  return typeof value === "boolean" ? value : fallback;
+}
+
+function normalizePrefillProfile(profile?: Partial<SubmitterPrefillProfile>): SubmitterPrefillProfile {
+  return {
+    currentCity: normalizeString(profile?.currentCity),
+    currentCompany: normalizeString(profile?.currentCompany),
+    englishConfidence: normalizeString(profile?.englishConfidence),
+    englishComfortText: normalizeString(profile?.englishComfortText),
+    spanishConfidence: normalizeString(profile?.spanishConfidence),
+    jobDiscoverySource: normalizeString(profile?.jobDiscoverySource) || DEFAULT_PREFILL_PROFILE.jobDiscoverySource,
+    hasFamilyAtCompany: normalizeString(profile?.hasFamilyAtCompany) || DEFAULT_PREFILL_PROFILE.hasFamilyAtCompany,
+    salaryExpectationClt: normalizeString(profile?.salaryExpectationClt) || DEFAULT_PREFILL_PROFILE.salaryExpectationClt,
+    currentSalaryAndBenefits:
+      normalizeString(profile?.currentSalaryAndBenefits) || DEFAULT_PREFILL_PROFILE.currentSalaryAndBenefits,
+    dataProcessingConsent: normalizeBoolean(profile?.dataProcessingConsent, DEFAULT_PREFILL_PROFILE.dataProcessingConsent),
+    contactConsent: normalizeBoolean(profile?.contactConsent, DEFAULT_PREFILL_PROFILE.contactConsent),
+  };
+}
+
+function readStoredSettings(): StoredDesktopSettings {
+  try {
+    if (!fs.existsSync(DESKTOP_SETTINGS_PATH)) return {};
+    return JSON.parse(fs.readFileSync(DESKTOP_SETTINGS_PATH, "utf8")) as StoredDesktopSettings;
+  } catch {
+    return {};
+  }
+}
+
+function saveSettings(config: StoredDesktopSettings): void {
   const parent = path.dirname(DESKTOP_SETTINGS_PATH);
   if (!fs.existsSync(parent)) fs.mkdirSync(parent, { recursive: true });
   fs.writeFileSync(DESKTOP_SETTINGS_PATH, JSON.stringify(config, null, 2), "utf8");
+}
+
+function hasMeaningfulPrefill(profile: SubmitterPrefillProfile): boolean {
+  const requiredTextFields = [
+    profile.currentCity,
+    profile.currentCompany,
+    profile.englishConfidence,
+    profile.englishComfortText,
+    profile.spanishConfidence,
+    profile.jobDiscoverySource,
+    profile.hasFamilyAtCompany,
+    profile.salaryExpectationClt,
+  ];
+
+  return requiredTextFields.every((value) => value.trim().length > 0);
+}
+
+function readSettings(): SubmitterConfig {
+  const stored = readStoredSettings();
+  const profile = normalizePrefillProfile(stored.prefillProfile);
+  return {
+    geminiApiKey: normalizeString(stored.geminiApiKey),
+    hasLinkedInSession: hasLinkedInSession(),
+    hasPrefillProfile: hasMeaningfulPrefill(profile),
+  };
 }
 
 async function fetchJson<T>(url: string, token: string): Promise<T | null> {
@@ -35,22 +168,41 @@ async function fetchJson<T>(url: string, token: string): Promise<T | null> {
   }
 }
 
+function hasLinkedInSession(): boolean {
+  return fs.existsSync(STATE_PATH);
+}
+
+function extractCvContent(payload: any): string {
+  const candidates = [
+    payload?.cvContent,
+    payload?.cv,
+    payload?.curriculo,
+    payload?.content,
+    payload?.texto,
+    payload?.data?.cvContent,
+    payload?.data?.cv,
+    payload?.data?.curriculo,
+    payload?.data?.content,
+    payload?.user?.cvContent,
+    payload?.user?.cv,
+  ];
+
+  for (const value of candidates) {
+    if (typeof value === "string" && value.trim()) return value;
+  }
+
+  return "";
+}
+
 export async function getUserCv(token: string, apiUrl: string): Promise<string> {
   const base = apiUrl.replace(/\/+$/, "");
-  const endpoints = ["/cv/me", "/curriculo/me", "/usuarios/me/cv", "/user/cv", "/users/me/cv", "/me/cv"];
+  const endpoints = ["/users/me", "/cv/me", "/curriculo/me", "/usuarios/me/cv", "/user/cv", "/users/me/cv", "/me/cv"];
 
   for (const endpoint of endpoints) {
     const data = await fetchJson<any>(`${base}${endpoint}`, token);
     if (!data) continue;
-    const cv =
-      data?.cv ||
-      data?.curriculo ||
-      data?.content ||
-      data?.texto ||
-      data?.data?.cv ||
-      data?.data?.curriculo ||
-      data?.data?.content;
-    if (typeof cv === "string" && cv.trim()) return cv;
+    const cv = extractCvContent(data);
+    if (cv) return cv;
   }
 
   if (fs.existsSync(CV_PATH)) {
@@ -65,12 +217,22 @@ export function getSubmitterConfig(): SubmitterConfig {
 }
 
 export function setGeminiApiKey(apiKey: string): void {
-  saveSettings({ ...readSettings(), geminiApiKey: apiKey.trim() });
+  const stored = readStoredSettings();
+  saveSettings({ ...stored, geminiApiKey: apiKey.trim() });
+}
+
+export function getSubmitterPrefillProfile(): SubmitterPrefillProfile {
+  const stored = readStoredSettings();
+  return normalizePrefillProfile(stored.prefillProfile);
+}
+
+export function setSubmitterPrefillProfile(profile: SubmitterPrefillProfile): void {
+  const stored = readStoredSettings();
+  saveSettings({ ...stored, prefillProfile: normalizePrefillProfile(profile) });
 }
 
 export async function loginLinkedInAndSaveSession(): Promise<void> {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { chromium } = require("playwright");
+  const chromium = loadChromium();
   const browser = await chromium.launch({ headless: false });
   const context = await browser.newContext();
   const page = await context.newPage();
@@ -93,11 +255,10 @@ function ensureGeminiKey(): void {
 }
 
 async function processarSubmissaoLegacy(page: unknown, vaga: VagaAnalisada): Promise<boolean> {
-  // Carrega o módulo legado sob demanda para evitar quebrar o boot do Electron.
+  registerTsNodeTranspileOnly();
+  const legacyModulePath = resolveLegacySubmitModulePath();
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  require("ts-node/register/transpile-only");
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const legacy = require(path.join(ROOT_DIR, "src", "modules", "submitter", "submit.ts"));
+  const legacy = require(legacyModulePath);
   return legacy.processarSubmissao(page, vaga);
 }
 
@@ -115,11 +276,10 @@ function validarVaga(vaga: VagaAnalisada): boolean {
 export async function runSubmitter(vagas: VagaAnalisada[]): Promise<{ total: number; success: number }> {
   ensureGeminiKey();
   if (!fs.existsSync(STATE_PATH)) {
-    throw new Error("Sessao do LinkedIn nao encontrada. Faça login no LinkedIn primeiro.");
+    throw new Error("Sessao do LinkedIn nao encontrada. Faca login no LinkedIn primeiro.");
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { chromium } = require("playwright");
+  const chromium = loadChromium();
   const browser = await chromium.launch({ headless: false });
   const context = await browser.newContext({ storageState: STATE_PATH });
   const page = await context.newPage();

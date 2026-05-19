@@ -9,7 +9,9 @@ electron.contextBridge.exposeInMainWorld("desktop", {
   },
   submitter: {
     getConfig: () => electron.ipcRenderer.invoke("submitter:get-config"),
+    getPrefillProfile: () => electron.ipcRenderer.invoke("submitter:get-prefill-profile"),
     setGeminiKey: (key) => electron.ipcRenderer.invoke("submitter:set-gemini-key", key),
+    setPrefillProfile: (profile) => electron.ipcRenderer.invoke("submitter:set-prefill-profile", profile),
     getUserCv: (token, apiUrl) => electron.ipcRenderer.invoke("submitter:get-user-cv", { token, apiUrl }),
     linkedinLogin: () => electron.ipcRenderer.invoke("submitter:linkedin-login"),
     run: (vagas) => electron.ipcRenderer.invoke("submitter:run", vagas),

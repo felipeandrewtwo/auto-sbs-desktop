@@ -3,13 +3,15 @@ import path from "node:path";
 import { clearToken, getToken, setToken } from "./token-store";
 import {
   getSubmitterConfig,
+  getSubmitterPrefillProfile,
   getUserCv,
   loginLinkedInAndSaveSession,
   runSubmitter,
   runSubmitterSingle,
   setGeminiApiKey,
+  setSubmitterPrefillProfile,
 } from "./submitter/service";
-import type { VagaAnalisada } from "./submitter/types";
+import type { SubmitterPrefillProfile, VagaAnalisada } from "./submitter/types";
 
 const isDev = !app.isPackaged;
 let win: BrowserWindow | null = null;
@@ -68,7 +70,11 @@ app.whenReady().then(() => {
   ipcMain.handle("auth:set-token", (_event, token: string) => setToken(token));
   ipcMain.handle("auth:clear-token", () => clearToken());
   ipcMain.handle("submitter:get-config", () => getSubmitterConfig());
+  ipcMain.handle("submitter:get-prefill-profile", () => getSubmitterPrefillProfile());
   ipcMain.handle("submitter:set-gemini-key", (_event, key: string) => setGeminiApiKey(key));
+  ipcMain.handle("submitter:set-prefill-profile", (_event, profile: SubmitterPrefillProfile) =>
+    setSubmitterPrefillProfile(profile),
+  );
   ipcMain.handle("submitter:get-user-cv", (_event, payload: { token: string; apiUrl: string }) =>
     getUserCv(payload.token, payload.apiUrl),
   );
