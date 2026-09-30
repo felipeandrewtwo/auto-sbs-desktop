@@ -6,6 +6,9 @@ export default defineConfig({
   main: {
     build: {
       outDir: "out/main",
+      rollupOptions: {
+        external: ["bufferutil", "utf-8-validate", "playwright"],
+      },
     },
   },
   preload: {

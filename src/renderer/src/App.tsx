@@ -72,6 +72,15 @@ export default function App() {
     [],
   );
 
+  useEffect(() => {
+    const handleSessionExpired = async () => {
+      await actions.logout();
+      setError("Sessao expirada. Faca login novamente.");
+    };
+    window.addEventListener("session-expired", handleSessionExpired);
+    return () => window.removeEventListener("session-expired", handleSessionExpired);
+  }, [actions]);
+
   if (view === "boot") {
     return <div className="min-h-screen bg-gray-50 dark:bg-slate-900" />;
   }
@@ -87,7 +96,9 @@ export default function App() {
           setLoading(true);
           setError("");
           try {
+            await window.desktop.auth.clearToken();
             const jwt = await login(email, senha);
+            await window.desktop.auth.setToken(jwt);
             setToken(jwt);
             try {
               const cfg = await window.desktop.submitter.getConfig();
@@ -100,12 +111,14 @@ export default function App() {
             } catch {
               setView("setup");
             }
-            try {
-              await window.desktop.auth.setToken(jwt);
-            } catch (persistError) {
-              console.warn("Falha ao persistir token no desktop:", persistError);
-            }
           } catch (err) {
+            setToken(null);
+            setView("login");
+            try {
+              await window.desktop.auth.clearToken();
+            } catch (clearError) {
+              console.warn("Falha ao limpar token no desktop:", clearError);
+            }
             console.error("Falha no login desktop:", err);
             setError(getErrorMessage(err));
           } finally {

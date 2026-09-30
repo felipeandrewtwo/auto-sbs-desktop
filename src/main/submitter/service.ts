@@ -1,15 +1,13 @@
 import fs from "node:fs";
-import { createRequire } from "node:module";
+import { chromium } from "playwright";
 import path from "node:path";
 import type { SubmitterConfig, SubmitterPrefillProfile, VagaAnalisada } from "./types";
+import { processarSubmissao } from "./dom_submitter";
+export { getUserCv } from "./user-cv";
 
 const ROOT_DIR = path.resolve(process.cwd());
 const STATE_PATH = path.join(ROOT_DIR, "state.json");
 const DESKTOP_SETTINGS_PATH = path.join(ROOT_DIR, "desktop", "settings.json");
-const CV_PATH = path.join(ROOT_DIR, "input", "cv.md");
-const LINKEDIN_ROOT_FROM_ENV = (process.env.AUTO_SBS_LINKEDIN_PATH || "").trim();
-
-let cachedLinkedinRoot: string | null = null;
 
 const DEFAULT_PREFILL_PROFILE: SubmitterPrefillProfile = {
   currentCity: "",
@@ -29,67 +27,6 @@ type StoredDesktopSettings = {
   geminiApiKey?: string;
   prefillProfile?: Partial<SubmitterPrefillProfile>;
 };
-
-function resolveLinkedinProjectRoot(): string {
-  if (cachedLinkedinRoot) return cachedLinkedinRoot;
-
-  const candidates = [
-    LINKEDIN_ROOT_FROM_ENV,
-    path.join(ROOT_DIR, "node_modules", "auto-sbs-linkedin"),
-    path.resolve(ROOT_DIR, "..", "auto-sbs-linkedin"),
-  ].filter(Boolean);
-
-  for (const candidate of candidates) {
-    if (fs.existsSync(path.join(candidate, "package.json"))) {
-      cachedLinkedinRoot = candidate;
-      return candidate;
-    }
-  }
-
-  throw new Error(
-    "Nao foi possivel localizar o projeto auto-sbs-linkedin. Defina AUTO_SBS_LINKEDIN_PATH com o caminho absoluto do repositorio.",
-  );
-}
-
-function getLinkedinRequire() {
-  const packageJsonPath = path.join(resolveLinkedinProjectRoot(), "package.json");
-  return createRequire(packageJsonPath);
-}
-
-function loadChromium() {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { chromium } = require("playwright");
-    return chromium;
-  } catch {
-    const linkedRequire = getLinkedinRequire();
-    const { chromium } = linkedRequire("playwright");
-    return chromium;
-  }
-}
-
-function registerTsNodeTranspileOnly(): void {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require("ts-node/register/transpile-only");
-    return;
-  } catch {
-    // noop
-  }
-
-  const linkedRequire = getLinkedinRequire();
-  linkedRequire("ts-node/register/transpile-only");
-}
-
-function resolveLegacySubmitModulePath(): string {
-  const localSubmitterModule = path.join(ROOT_DIR, "src", "modules", "submitter", "submit.ts");
-  if (fs.existsSync(localSubmitterModule)) return localSubmitterModule;
-
-  const linkedSubmitterModule = path.join(resolveLinkedinProjectRoot(), "src", "modules", "submitter", "submit.ts");
-  if (fs.existsSync(linkedSubmitterModule)) return linkedSubmitterModule;
-
-  throw new Error("Nao foi possivel localizar src/modules/submitter/submit.ts.");
-}
 
 function normalizeString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
@@ -156,60 +93,8 @@ function readSettings(): SubmitterConfig {
   };
 }
 
-async function fetchJson<T>(url: string, token: string): Promise<T | null> {
-  try {
-    const response = await fetch(url, {
-      headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
-    });
-    if (!response.ok) return null;
-    return (await response.json()) as T;
-  } catch {
-    return null;
-  }
-}
-
 function hasLinkedInSession(): boolean {
   return fs.existsSync(STATE_PATH);
-}
-
-function extractCvContent(payload: any): string {
-  const candidates = [
-    payload?.cvContent,
-    payload?.cv,
-    payload?.curriculo,
-    payload?.content,
-    payload?.texto,
-    payload?.data?.cvContent,
-    payload?.data?.cv,
-    payload?.data?.curriculo,
-    payload?.data?.content,
-    payload?.user?.cvContent,
-    payload?.user?.cv,
-  ];
-
-  for (const value of candidates) {
-    if (typeof value === "string" && value.trim()) return value;
-  }
-
-  return "";
-}
-
-export async function getUserCv(token: string, apiUrl: string): Promise<string> {
-  const base = apiUrl.replace(/\/+$/, "");
-  const endpoints = ["/users/me", "/cv/me", "/curriculo/me", "/usuarios/me/cv", "/user/cv", "/users/me/cv", "/me/cv"];
-
-  for (const endpoint of endpoints) {
-    const data = await fetchJson<any>(`${base}${endpoint}`, token);
-    if (!data) continue;
-    const cv = extractCvContent(data);
-    if (cv) return cv;
-  }
-
-  if (fs.existsSync(CV_PATH)) {
-    return fs.readFileSync(CV_PATH, "utf8");
-  }
-
-  throw new Error("Nao foi possivel obter o CV do usuario logado.");
 }
 
 export function getSubmitterConfig(): SubmitterConfig {
@@ -232,7 +117,6 @@ export function setSubmitterPrefillProfile(profile: SubmitterPrefillProfile): vo
 }
 
 export async function loginLinkedInAndSaveSession(): Promise<void> {
-  const chromium = loadChromium();
   const browser = await chromium.launch({ headless: false });
   const context = await browser.newContext();
   const page = await context.newPage();
@@ -254,14 +138,6 @@ function ensureGeminiKey(): void {
   process.env.GEMINI_API_KEY = config.geminiApiKey;
 }
 
-async function processarSubmissaoLegacy(page: unknown, vaga: VagaAnalisada): Promise<boolean> {
-  registerTsNodeTranspileOnly();
-  const legacyModulePath = resolveLegacySubmitModulePath();
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const legacy = require(legacyModulePath);
-  return legacy.processarSubmissao(page, vaga);
-}
-
 function validarVaga(vaga: VagaAnalisada): boolean {
   if (vaga.submetido) return false;
   const min = Number(process.env.PORCENTAGEM_SUBMISSAO || "0");
@@ -273,13 +149,14 @@ function validarVaga(vaga: VagaAnalisada): boolean {
   return true;
 }
 
-export async function runSubmitter(vagas: VagaAnalisada[]): Promise<{ total: number; success: number }> {
+export async function runSubmitter(vagas: VagaAnalisada[], loadCv: () => Promise<string>): Promise<{ total: number; success: number }> {
+  const cv = await loadCv();
+  if (typeof cv !== "string" || !cv.trim()) throw new Error("CV_EMPTY");
   ensureGeminiKey();
   if (!fs.existsSync(STATE_PATH)) {
     throw new Error("Sessao do LinkedIn nao encontrada. Faca login no LinkedIn primeiro.");
   }
 
-  const chromium = loadChromium();
   const browser = await chromium.launch({ headless: false });
   const context = await browser.newContext({ storageState: STATE_PATH });
   const page = await context.newPage();
@@ -290,7 +167,7 @@ export async function runSubmitter(vagas: VagaAnalisada[]): Promise<{ total: num
     for (const vaga of elegiveis) {
       if (!vaga.linkVaga) continue;
       await page.goto(vaga.linkVaga, { waitUntil: "domcontentloaded" });
-      const ok = await processarSubmissaoLegacy(page as any, vaga as any);
+      const ok = await processarSubmissao(page, vaga, cv);
       if (ok) success += 1;
       await page.waitForTimeout(Number(process.env.DELAY_SUBMISSAO || "2500"));
     }
@@ -301,7 +178,7 @@ export async function runSubmitter(vagas: VagaAnalisada[]): Promise<{ total: num
   }
 }
 
-export async function runSubmitterSingle(vaga: VagaAnalisada): Promise<boolean> {
-  const result = await runSubmitter([vaga]);
+export async function runSubmitterSingle(vaga: VagaAnalisada, loadCv: () => Promise<string>): Promise<boolean> {
+  const result = await runSubmitter([vaga], loadCv);
   return result.success > 0;
 }
