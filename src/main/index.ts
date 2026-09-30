@@ -4,7 +4,6 @@ import { clearToken, getToken, setToken } from "./token-store";
 import {
   getSubmitterConfig,
   getSubmitterPrefillProfile,
-  getUserCv,
   loginLinkedInAndSaveSession,
   runSubmitter,
   runSubmitterSingle,
@@ -12,6 +11,12 @@ import {
   setSubmitterPrefillProfile,
 } from "./submitter/service";
 import type { SubmitterPrefillProfile, VagaAnalisada } from "./submitter/types";
+import { getCurrentUserCv } from "./submitter/user-cv";
+
+function loadCurrentUserCv(): Promise<string> {
+  const apiUrl = process.env.VITE_API_URL || import.meta.env.VITE_API_URL || "http://localhost:3000";
+  return getCurrentUserCv(getToken, apiUrl);
+}
 
 const isDev = !app.isPackaged;
 let win: BrowserWindow | null = null;
@@ -75,12 +80,10 @@ app.whenReady().then(() => {
   ipcMain.handle("submitter:set-prefill-profile", (_event, profile: SubmitterPrefillProfile) =>
     setSubmitterPrefillProfile(profile),
   );
-  ipcMain.handle("submitter:get-user-cv", (_event, payload: { token: string; apiUrl: string }) =>
-    getUserCv(payload.token, payload.apiUrl),
-  );
+  ipcMain.handle("submitter:get-user-cv", () => loadCurrentUserCv());
   ipcMain.handle("submitter:linkedin-login", () => loginLinkedInAndSaveSession());
-  ipcMain.handle("submitter:run", (_event, vagas: VagaAnalisada[]) => runSubmitter(vagas));
-  ipcMain.handle("submitter:run-single", (_event, vaga: VagaAnalisada) => runSubmitterSingle(vaga));
+  ipcMain.handle("submitter:run", (_event, vagas: VagaAnalisada[]) => runSubmitter(vagas, loadCurrentUserCv));
+  ipcMain.handle("submitter:run-single", (_event, vaga: VagaAnalisada) => runSubmitterSingle(vaga, loadCurrentUserCv));
 
   createWindow();
 });

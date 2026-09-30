@@ -42,6 +42,10 @@ export function Setup({ token, darkMode, onToggleTheme, onLogout, onContinue }: 
       await fn();
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Falha ao executar acao de configuracao.";
+      if (msg.includes("SESSION_EXPIRED")) {
+        window.dispatchEvent(new CustomEvent("session-expired"));
+        return;
+      }
       setFeedback({ kind: "error", text: msg });
     } finally {
       setBusyAction("");
